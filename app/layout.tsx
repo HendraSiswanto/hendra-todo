@@ -3,9 +3,9 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 
 const roboto = Roboto({
-    variable: "--font-roboto",
+  variable: "--font-roboto",
   subsets: ["latin"],
-}) 
+});
 
 export const metadata: Metadata = {
   title: "Hendra Todo Nodewave",
@@ -19,10 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.variable} min-h-screen antialiased`}
-      >
-        {children}
+      <body className={`${roboto.variable} min-h-screen antialiased`}>
+        <div className="min-h-screen bg-white">{children}</div>
       </body>
     </html>
   );

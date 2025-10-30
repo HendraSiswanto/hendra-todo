@@ -13,18 +13,20 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-      <h1
-        className="text-[56px] font-semibold text-center mb-6 text-[#44444F]"
-        style={{ fontFamily: "Poppins, sans-serif" }}
-      >
-        Sign In
-      </h1>
-      <h2
-        className="text-[16px] font-normal text-center mb-6 text-[#44444F]"
-        style={{ fontFamily: "Poppins, sans-serif" }}
-      >
-        Just sign in if you have an account in here. Enjoy our Website
-      </h2>
+      <div className="mb-15">
+        <h1
+          className="text-[56px] font-semibold text-center mb-6 text-[#44444F]"
+          style={{ fontFamily: "Poppins, sans-serif" }}
+        >
+          Sign In
+        </h1>
+        <h2
+          className="text-[16px] font-normal text-center  text-[#44444F]"
+          style={{ fontFamily: "Poppins, sans-serif" }}
+        >
+          Just sign in if you have an account in here. Enjoy our Website
+        </h2>
+      </div>
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-8">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
