@@ -3,7 +3,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,13 +19,13 @@ export default function LoginPage() {
           className=" text-[56px] font-semibold text-center mb-8 text-[#44444F]"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
-          Sign In
+          Register
         </h1>
         <h2
           className="w-[438px] text-[16px] font-normal text-center  text-[#92929D]"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
-          Just sign in if you have an account in here. Enjoy our Website
+          Let’s Sign up first for enter into Square Website. Uh She Up!
         </h2>
       </div>
       <div className="w-[560px] h-[314px] bg-gray rounded-[20px] shadow-sm p-8">
