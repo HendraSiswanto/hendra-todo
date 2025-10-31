@@ -1,5 +1,6 @@
 "use client";
 
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -56,13 +57,17 @@ export default function LoginPage() {
               required
             />
           </div>
+          <div className="flex flex-row justify-between align-middle">
           <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="checkbox"
-              className="h-4 w-4 accent-[#50B5FF] cursor-pointer text-white"
+            <Checkbox
+              id="remember"
+              className="data-[state=checked]:bg-[#50B5FF]  data-[state=checked]:text-white cursor-pointer"
             />
-            <span className="text-[14px] text-[#696974]">Remember me</span>
+            <span className="text-[14px] text-[#696974] ml-1">Remember me</span>
           </label>
+
+          <a className="size-3.5 w-fit h-fit text-[#50B5FF] font-medium cursor-pointer hover:underline">Forgot Password</a>
+          </div>
 
           <button
             type="submit"
