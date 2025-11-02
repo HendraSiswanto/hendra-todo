@@ -66,18 +66,54 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className="flex flex-row justify-between w-60  mt-6">
+          <div className="flex flex-row justify-between  mt-6">
+            <div className="flex flex-row justify-between w-60 ">
+              <select
+                className="w-[50px]  cursor-pointer text-center appearance-none h-12 placeholder:text-[#B5B5BE] text-[#50B5FF] border border-[#50B5FF] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+                value={formdata.countryCode}
+                onChange={handleChange}
+                name="countryCode"
+                required
+              >
+                <option value="+62">+62</option>
+                <option value="+1">+1</option>
+                <option value="+91">+91</option>
+              </select>
+              <input
+                className="w-[180px] h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+                placeholder="Phone Number"
+                value={formdata.phonenumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
             <select
-              className="w-[50px] text-center appearance-none h-12 placeholder:text-[#B5B5BE] text-[#50B5FF] border border-[#50B5FF] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
-              value={formdata.countryCode}
+              className={`relative w-60 h-12  appearance-none cursor-pointer pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]
+              ${
+                formdata.country === "" ? "text-[#B5B5BE]" : "text-[#44444F]"
+              } `}
+              value={formdata.country}
               onChange={handleChange}
-              name="countryCode"
+              name="country"
               required
             >
-              <option value="+62">+62</option>
-              <option value="+1">+1</option>
-              <option value="+91">+91</option>
+              <option value="" disabled hidden>
+                Your Country
+              </option>
+              <option value="indonesia">Indonesia</option>
+              <option value="malaysia">Malaysia</option>
+              <option value="india">India</option>
             </select>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="absolute right-3 bi bi-caret-down-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+            </svg>
           </div>
 
           <div className="flex flex-row justify-between mt-6">
