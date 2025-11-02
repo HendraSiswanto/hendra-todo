@@ -30,14 +30,20 @@ export default function RegisterPage() {
       </div>
       <div className="w-[560px] h-[314px] bg-gray rounded-[20px] shadow-sm p-8">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative mt-3">
-            <label className="absolute -top-2 ml-[15px] w-[133px] bg-[#ffffff] text-center block text-[12px] font-normal text-[#50B5FF] mb-1">
-              Your Email / Username
+          <div className="flex flex-row justify-between relative mt-3">
+            <label className="absolute -top-2 ml-[15px] w-[68px] bg-[#ffffff] text-center block text-[12px] font-normal text-[#50B5FF] mb-1">
+              First Name
             </label>
             <input
-              type="email"
-              className="w-[500px] h-[48] text-[#44444F] pl-[15px] border border-[#50B5FF] rounded-[10px] focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
-              placeholder="Enter your email"
+              className="w-60 h-[48] placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#50B5FF] rounded-[10px] focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+              placeholder="Enter your first name"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+             <input
+              className="w-60 h-[48] placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px] focus:outline-none focus:ring-1 focus:ring-[#e2e2ead6]"
+              placeholder="Last Name"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
