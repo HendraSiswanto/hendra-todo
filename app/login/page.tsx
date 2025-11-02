@@ -13,7 +13,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-screen min-h-screen fixed flex flex-col items-center justify-center bg-[#ffffff] px-4">
+    <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-[#ffffff] px-4">
       <div className="mb-10">
         <h1
           className=" text-[56px] font-semibold text-center mb-8 text-[#44444F]"
