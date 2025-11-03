@@ -87,33 +87,35 @@ export default function RegisterPage() {
                 required
               />
             </div>
-            <select
-              className={`relative w-60 h-12  appearance-none cursor-pointer pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]
+            <div className="relative flex flex-row content-center">
+              <select
+                className={`relative w-60 h-12  appearance-none cursor-pointer pl-[15px]  border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]
               ${
                 formdata.country === "" ? "text-[#B5B5BE]" : "text-[#44444F]"
               } `}
-              value={formdata.country}
-              onChange={handleChange}
-              name="country"
-              required
-            >
-              <option value="" disabled hidden>
-                Your Country
-              </option>
-              <option value="indonesia">Indonesia</option>
-              <option value="malaysia">Malaysia</option>
-              <option value="india">India</option>
-            </select>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="absolute right-3 bi bi-caret-down-fill"
-              viewBox="0 0 16 16"
-            >
-              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-            </svg>
+                value={formdata.country}
+                onChange={handleChange}
+                name="country"
+                required
+              >
+                <option value="" disabled hidden>
+                  Your Country
+                </option>
+                <option value="indonesia">Indonesia</option>
+                <option value="malaysia">Malaysia</option>
+                <option value="india">India</option>
+              </select>
+              <div className="absolute top-4 right-4 pointer-events-none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="w-4 h-4 text-[#B5B5BE] bi bi-caret-down-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-row justify-between mt-6">
