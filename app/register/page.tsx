@@ -15,7 +15,7 @@ export default function RegisterPage() {
     about: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -29,8 +29,11 @@ export default function RegisterPage() {
     console.log("Form submitted:", formdata);
   };
 
-  const handlePasswordInvisible = () => {
-    setShowPassword((prev) => !prev);
+  const handlePasswordInvisible = (field:"password"|"confirmPassword") => {
+   
+   if(field === "password") {setShowPassword((prev) => !prev);}
+   else{
+    setShowConfirmPassword((prev) => !prev)}
   };
 
   return (
@@ -56,6 +59,7 @@ export default function RegisterPage() {
               First Name
             </label>
             <input
+            name="firstname"
               className="w-60 h-[48] placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#50B5FF] rounded-[10px] focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
               placeholder="First Name"
               value={formdata.firstname}
@@ -63,6 +67,7 @@ export default function RegisterPage() {
               required
             />
             <input
+            name="lastname"
               className="w-60 h-[48] placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
               placeholder="Last Name"
               value={formdata.lastname}
@@ -85,6 +90,7 @@ export default function RegisterPage() {
                 <option value="+91">+91</option>
               </select>
               <input
+              name="phonenumber"
                 className="w-[180px] h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Phone Number"
                 value={formdata.phonenumber}
@@ -111,21 +117,15 @@ export default function RegisterPage() {
                 <option value="india">India</option>
               </select>
               <div className="absolute top-4 right-4 pointer-events-none">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  className="w-4 h-4 text-[#B5B5BE] bi bi-caret-down-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                </svg>
+                <i className="w-4 h-4 text-[#B5B5BE] bi bi-caret-down-fill"></i>
               </div>
             </div>
           </div>
 
           <div className="flex flex-row justify-between mt-6">
-            <div className="relative flex">
+            <div className="relative flex items-center">
               <input
+              name="password"
                 type={showPassword ? "text" : "password"}
                 className="w-60 h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Password"
@@ -133,14 +133,35 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 required
               />
+         
               <button
-                className="absolute  top-4 right-4 "
-                onClick={handlePasswordInvisible}
+                className="absolute right-4 "
+                onClick={() => handlePasswordInvisible("password")}
               >
-                <i className="bi bi-eye text-[#92929D] cursor-pointer"></i>
+              {showPassword? <i className="bi bi-eye-slash text-[#92929D] cursor-pointer "></i> :<i className="bi bi-eye text-[#92929D] cursor-pointer"></i> }  
+              </button>
+            </div>
+          
+           <div className="relative flex items-center">
+              <input
+              name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                className="w-60 h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+                placeholder="Confirm Password"
+                value={formdata.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+         
+              <button
+                className="absolute right-4 "
+                onClick={() => handlePasswordInvisible("confirmPassword")}
+              >
+              {showConfirmPassword? <i className="bi bi-eye-slash text-[#92929D] cursor-pointer "></i> :<i className="bi bi-eye text-[#92929D] cursor-pointer"></i> }  
               </button>
             </div>
           </div>
+
 
           <button
             type="submit"
