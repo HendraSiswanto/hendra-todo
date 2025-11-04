@@ -14,7 +14,7 @@ export default function RegisterPage() {
     confirmPassword: "",
     about: "",
   });
-  const [showPassword,setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -27,6 +27,10 @@ export default function RegisterPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formdata);
+  };
+
+  const handlePasswordInvisible = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -122,15 +126,18 @@ export default function RegisterPage() {
           <div className="flex flex-row justify-between mt-6">
             <div className="relative flex">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="w-60 h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Password"
                 value={formdata.password}
                 onChange={handleChange}
                 required
               />
-              <button className="absolute  top-4 right-4 ">
-                tes
+              <button
+                className="absolute  top-4 right-4 "
+                onClick={handlePasswordInvisible}
+              >
+                <i className="bi bi-eye text-[#92929D] cursor-pointer"></i>
               </button>
             </div>
           </div>
