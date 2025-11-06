@@ -41,11 +41,12 @@ export default function RegisterPage() {
       return;
     }
 
-    const fullEmail = `${formdata.email}@squareteam.com`;
-
+    const fullEmail = `${formdata.email}@nodewave.id`;
+    const fullName = `${formdata.firstname} ${formdata.lastname}`
     const finalData = {
-      ...formdata,
+      fullName,
       email: fullEmail,
+      password: formdata.password
     };
     console.log("Form submitted:", finalData);
   };
