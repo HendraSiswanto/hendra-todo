@@ -15,7 +15,7 @@ export default function RegisterPage() {
     about: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -29,11 +29,12 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     console.log("Form submitted:", formdata);
   };
 
-  const handlePasswordInvisible = (field:"password"|"confirmPassword") => {
-   
-   if(field === "password") {setShowPassword((prev) => !prev);}
-   else{
-    setShowConfirmPassword((prev) => !prev)}
+  const handlePasswordInvisible = (field: "password" | "confirmPassword") => {
+    if (field === "password") {
+      setShowPassword((prev) => !prev);
+    } else {
+      setShowConfirmPassword((prev) => !prev);
+    }
   };
 
   return (
@@ -59,7 +60,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
               First Name
             </label>
             <input
-            name="firstname"
+              name="firstname"
               className="w-60 h-[48] placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#50B5FF] rounded-[10px] focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
               placeholder="First Name"
               value={formdata.firstname}
@@ -67,7 +68,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
               required
             />
             <input
-            name="lastname"
+              name="lastname"
               className="w-60 h-[48] placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
               placeholder="Last Name"
               value={formdata.lastname}
@@ -90,7 +91,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 <option value="+91">+91</option>
               </select>
               <input
-              name="phonenumber"
+                name="phonenumber"
                 className="w-[180px] h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Phone Number"
                 value={formdata.phonenumber}
@@ -125,7 +126,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
           <div className="flex flex-row justify-between mt-6">
             <div className="relative flex items-center">
               <input
-              name="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 className="w-60 h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Password"
@@ -133,18 +134,22 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 onChange={handleChange}
                 required
               />
-         
+
               <button
                 className="absolute right-4 "
                 onClick={() => handlePasswordInvisible("password")}
               >
-              {showPassword? <i className="bi bi-eye-slash text-[#92929D] cursor-pointer "></i> :<i className="bi bi-eye text-[#92929D] cursor-pointer"></i> }  
+                {showPassword ? (
+                  <i className="bi bi-eye-slash text-[#92929D] cursor-pointer "></i>
+                ) : (
+                  <i className="bi bi-eye text-[#92929D] cursor-pointer"></i>
+                )}
               </button>
             </div>
-          
-           <div className="relative flex items-center">
+
+            <div className="relative flex items-center">
               <input
-              name="confirmPassword"
+                name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 className="w-60 h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Confirm Password"
@@ -152,16 +157,33 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 onChange={handleChange}
                 required
               />
-         
+
               <button
                 className="absolute right-4 "
                 onClick={() => handlePasswordInvisible("confirmPassword")}
               >
-              {showConfirmPassword? <i className="bi bi-eye-slash text-[#92929D] cursor-pointer "></i> :<i className="bi bi-eye text-[#92929D] cursor-pointer"></i> }  
+                {showConfirmPassword ? (
+                  <i className="bi bi-eye-slash text-[#92929D] cursor-pointer "></i>
+                ) : (
+                  <i className="bi bi-eye text-[#92929D] cursor-pointer"></i>
+                )}
               </button>
             </div>
           </div>
 
+          <div className=" flex flex-col w-[500px] h-[127px] space-y-2 mt-[30px]">
+            <label className="text-[14px] w-[136px] h-4 text-[#44444F]">
+              Tell us about yourself
+            </label>
+            <textarea
+              name="about"
+              className="placeholder:text-[#B5B5BE] w-[500px] h-24 border border-[#E2E2EA] rounded-[10px] pt-4 p-[15px] resize-none focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+              rows={3}
+              value={formdata.about}
+              onChange={handleChange}
+              placeholder="Hello my name..."
+            ></textarea>
+          </div>
 
           <button
             type="submit"
