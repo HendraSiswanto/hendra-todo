@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter()
   const [formdata, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -24,17 +26,28 @@ export default function RegisterPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formdata);
-  };
-
   const handlePasswordInvisible = (field: "password" | "confirmPassword") => {
     if (field === "password") {
       setShowPassword((prev) => !prev);
     } else {
       setShowConfirmPassword((prev) => !prev);
     }
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formdata.password !== formdata.confirmPassword) {
+      alert("password do not match!");
+      return;
+    }
+
+    const fullEmail = `${formdata.email}@squareteam.com`;
+
+    const finalData = {
+      ...formdata,
+      email: fullEmail,
+    };
+    console.log("Form submitted:", finalData);
   };
 
   return (
@@ -122,7 +135,7 @@ export default function RegisterPage() {
               </div>
             </div>
           </div>
-          <div className="relative flex flex-row content-center">
+          <div className="relative flex flex-row items-center">
             <input
               type="text"
               name="email"
@@ -132,8 +145,8 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
             />
-            <span className="absolute right-4 text-[#44444F]">
-              @squareteam.com{" "}
+            <span className="absolute right-[15px] text-[#44444F]">
+              @nodewave.id{" "}
             </span>
           </div>
 
@@ -141,6 +154,7 @@ export default function RegisterPage() {
             <div className="relative flex items-center">
               <input
                 name="password"
+                minLength={10}
                 type={showPassword ? "text" : "password"}
                 className="w-60 h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
                 placeholder="Password"
@@ -150,6 +164,7 @@ export default function RegisterPage() {
               />
 
               <button
+                type="button"
                 className="absolute right-4 "
                 onClick={() => handlePasswordInvisible("password")}
               >
@@ -173,6 +188,7 @@ export default function RegisterPage() {
               />
 
               <button
+                type="button"
                 className="absolute right-4 "
                 onClick={() => handlePasswordInvisible("confirmPassword")}
               >
@@ -199,12 +215,19 @@ export default function RegisterPage() {
             ></textarea>
           </div>
 
+          <div  className="w-[500px] h-12 flex flex-row justify-between">
+            <button type="button" onClick={() => router.push("/login")} className="w-[150px] h-12 border-none rounded-[10px] cursor-pointer bg-[#F1F1F5] text-[12px] font-semibold text-[#696974]">
+              Login
+            </button>
           <button
             type="submit"
-            className="cursor-pointer w-[500px] h-12 bg-[#0062FF] text-white rounded-[10px] font-semibold text-[12px] hover:bg-[#044dc3] transition"
+            className="cursor-pointer w-[340px] h-12 bg-[#0062FF] text-white rounded-[10px] font-semibold text-[12px] hover:bg-[#044dc3] transition"
           >
             Register
           </button>
+            
+          </div>      
+
         </form>
       </div>
     </div>
