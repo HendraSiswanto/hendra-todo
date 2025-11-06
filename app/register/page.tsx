@@ -53,9 +53,9 @@ export default function RegisterPage() {
           Let’s Sign up first for enter into Square Website. Uh She Up!
         </h2>
       </div>
-      <div className="w-[560px] h-[597px] bg-gray rounded-[20px] shadow-sm p-8">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-row justify-between relative mt-3">
+      <div className="w-[560px] h-[597px] bg-gray rounded-[20px] shadow-sm p-[30px]">
+        <form onSubmit={handleSubmit} className="space-y-5 mt-5">
+          <div className="flex flex-row justify-between relative mt-5">
             <label className="absolute -top-2 ml-[15px] w-[68px] bg-[#ffffff] text-center block text-[12px] font-normal text-[#50B5FF] mb-1">
               First Name
             </label>
@@ -77,7 +77,7 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className="flex flex-row justify-between  mt-6">
+          <div className="flex flex-row justify-between  mt-5">
             <div className="flex flex-row justify-between w-60 ">
               <select
                 className="w-[50px]  cursor-pointer text-center appearance-none h-12 placeholder:text-[#B5B5BE] text-[#50B5FF] border border-[#50B5FF] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
@@ -122,8 +122,19 @@ export default function RegisterPage() {
               </div>
             </div>
           </div>
+          <div> 
+            <input
+            type="text"
+              name="email"
+              className="w-[500px] h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+              placeholder="Mail Address"
+              value={formdata.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <div className="flex flex-row justify-between mt-6">
+          <div className="flex flex-row justify-between mt-5">
             <div className="relative flex items-center">
               <input
                 name="password"
@@ -171,13 +182,13 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <div className=" flex flex-col w-[500px] h-[127px] space-y-2 mt-[30px]">
+          <div className=" flex flex-col w-[500px] h-[127px] space-y-2 mt-[30px] mb-[70px]">
             <label className="text-[14px] w-[136px] h-4 text-[#44444F]">
               Tell us about yourself
             </label>
             <textarea
               name="about"
-              className="placeholder:text-[#B5B5BE] w-[500px] h-24 border border-[#E2E2EA] rounded-[10px] pt-4 p-[15px] resize-none focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
+              className="mt-[15px] placeholder:text-[#B5B5BE] w-[500px] h-24 border border-[#E2E2EA] rounded-[10px] pt-4 p-[15px] resize-none focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
               rows={3}
               value={formdata.about}
               onChange={handleChange}
