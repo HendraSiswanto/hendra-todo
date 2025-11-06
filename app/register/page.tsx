@@ -122,9 +122,9 @@ export default function RegisterPage() {
               </div>
             </div>
           </div>
-          <div> 
+          <div className="relative flex flex-row content-center">
             <input
-            type="text"
+              type="text"
               name="email"
               className="w-[500px] h-12 placeholder:text-[#B5B5BE] text-[#44444F] pl-[15px] border border-[#E2E2EA] rounded-[10px]  focus:outline-none focus:ring-1 focus:ring-[#3bacfd]"
               placeholder="Mail Address"
@@ -132,6 +132,9 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
             />
+            <span className="absolute right-4 text-[#44444F]">
+              @squareteam.com{" "}
+            </span>
           </div>
 
           <div className="flex flex-row justify-between mt-5">
