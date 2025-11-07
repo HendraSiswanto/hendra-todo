@@ -1,38 +1,47 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errMassage, setErrMessage] = useState("")
+  const [errMassage, setErrMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://fe-test-api.nwappservice.com/login", {
-        method: "POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({
-          email,
-          password
-        })
-      })
-      const data = await response.json()
+      const response = await fetch(
+        "https://fe-test-api.nwappservice.com/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
-      if (!response.ok){
-        alert(data.message || "Login Failed")
-        return
+      const data = await response.json();
+
+     
+
+      if (!response.ok) {
+        alert(data.message || "Login Failed");
+        return;
+
       }
-    
+       localStorage.setItem("token", data.content.token);
+      localStorage.setItem("user", JSON.stringify(data.content.user));
+      router.push("/dashboard")
+    } catch (error) {
+      setErrMessage("Something went wrong. Please try again.");
+      console.error("Error:", error);
     }
-  catch (error){
-    setErrMessage("Something went wrong. Please try again.");
-    console.error("Error:", error);
-  }
-    
   };
 
   return (
@@ -103,6 +112,8 @@ export default function LoginPage() {
             Login
           </button>
         </form>
+        {errMassage && <p style={{ color: "red" }}>{errMassage}</p>}
+
       </div>
       <p className="text-center font-medium text-[14px] text-[#0062FF] mt-[15px]">
         Don’t have an account?{" "}
