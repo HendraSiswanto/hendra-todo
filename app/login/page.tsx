@@ -6,10 +6,33 @@ import { useState } from "react";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMassage, setErrMessage] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login Data:", { email, password });
+
+    try {
+      const response = await fetch("https://fe-test-api.nwappservice.com/login", {
+        method: "POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          email,
+          password
+        })
+      })
+      const data = await response.json()
+
+      if (!response.ok){
+        alert(data.message || "Login Failed")
+        return
+      }
+    
+    }
+  catch (error){
+    setErrMessage("Something went wrong. Please try again.");
+    console.error("Error:", error);
+  }
+    
   };
 
   return (

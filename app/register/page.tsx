@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [formdata, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -33,7 +33,7 @@ export default function RegisterPage() {
       setShowConfirmPassword((prev) => !prev);
     }
   };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formdata.password !== formdata.confirmPassword) {
@@ -42,15 +42,38 @@ export default function RegisterPage() {
     }
 
     const fullEmail = `${formdata.email}@nodewave.id`;
-    const fullName = `${formdata.firstname} ${formdata.lastname}`
+    const fullName = `${formdata.firstname} ${formdata.lastname}`;
     const finalData = {
       fullName,
       email: fullEmail,
-      password: formdata.password
+      password: formdata.password,
     };
-    console.log("Form submitted:", finalData);
-  };
 
+    try {
+      const response = await fetch(
+        "https://fe-test-api.nwappservice.com/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(finalData),
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok) {
+        console.log("Error:", data);
+        alert("Registration failed: " + data.message);
+        return;
+      }
+
+      console.log("Success:", data);
+      alert("Registration successful!");
+      router.push("/login")
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again later.");
+    }
+  };
   return (
     <div className="w-screen min-h-screen  flex flex-col items-center justify-center bg-[#ffffff] px-4">
       <div className="mb-10">
@@ -216,19 +239,21 @@ export default function RegisterPage() {
             ></textarea>
           </div>
 
-          <div  className="w-[500px] h-12 flex flex-row justify-between">
-            <button type="button" onClick={() => router.push("/login")} className="w-[150px] h-12 border-none rounded-[10px] cursor-pointer bg-[#F1F1F5] text-[12px] font-semibold text-[#696974]">
+          <div className="w-[500px] h-12 flex flex-row justify-between">
+            <button
+              type="button"
+              onClick={() => router.push("/login")}
+              className="w-[150px] h-12 border-none rounded-[10px] cursor-pointer bg-[#F1F1F5] text-[12px] font-semibold text-[#696974]"
+            >
               Login
             </button>
-          <button
-            type="submit"
-            className="cursor-pointer w-[340px] h-12 bg-[#0062FF] text-white rounded-[10px] font-semibold text-[12px] hover:bg-[#044dc3] transition"
-          >
-            Register
-          </button>
-            
-          </div>      
-
+            <button
+              type="submit"
+              className="cursor-pointer w-[340px] h-12 bg-[#0062FF] text-white rounded-[10px] font-semibold text-[12px] hover:bg-[#044dc3] transition"
+            >
+              Register
+            </button>
+          </div>
         </form>
       </div>
     </div>
