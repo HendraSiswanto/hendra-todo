@@ -36,8 +36,9 @@ export default function DashboardPage() {
         </span>
       </div>
 
-      <div>
-        <p className="text-[#323232] text-[16px]">{user.fullName}</p>
+      <div className="w-[168px] mr-[100px]">
+        <p className="text-[#323232] text-[16px] w-36 border flex justify-center">{user.fullName}</p>
+        
       </div>
     </div>
   );
