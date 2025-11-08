@@ -36,9 +36,13 @@ export default function DashboardPage() {
         </span>
       </div>
 
-      <div className="w-[168px] mr-[100px]">
-        <p className="text-[#323232] text-[16px] w-36 border flex justify-center">{user.fullName}</p>
-        
+      <div className="w-[187px] mr-[100px] flex justify-between items-center">
+        <p className="text-[#323232] text-[16px] w-36 flex justify-center">{user.fullName}</p>
+        <div className="relative">
+
+        <img src="/assets/Avatar.svg" alt="Profile Icon" className="ml-6" />
+        <span className="absolute border border-white bottom-0 right-0"></span>
+        </div>
       </div>
     </div>
   );
