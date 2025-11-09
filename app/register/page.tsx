@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+
 export default function RegisterPage() {
   const router = useRouter();
   const [formdata, setFormData] = useState({
@@ -85,7 +86,7 @@ export default function RegisterPage() {
         </h1>
         <h2
           className="w-[438px] text-[16px] font-normal text-center  text-[#92929D]"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+          style={{ fontFamily: "Roboto, sans-serif" }}
         >
           Let’s Sign up first for enter into Square Website. Uh She Up!
         </h2>
