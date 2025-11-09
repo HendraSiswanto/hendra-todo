@@ -9,6 +9,8 @@ interface User {
 }
 
 export default function DashboardPage() {
+  const [todo, setTodo] = useState("");
+  const [massage, setMassage] = useState("");
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -25,6 +27,39 @@ export default function DashboardPage() {
 
   if (!user) return <p>Loading...</p>;
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You need to login first!");
+      return;
+    }
+    try {
+      const response = await fetch(
+        "https://fe-test-api.nwappservice.com/todos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json ",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ item: todo }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setMassage(data.message);
+        console.log(massage);
+      } else {
+        setMassage(data.message);
+        console.log(massage);
+      }
+    } catch (error) {
+      console.error(error);
+      setMassage("Something went wrong");
+    }
+  };
   return (
     <>
       <div className="fixed right-0 left-0 top-0 flex flex-row justify-between border border-[#D8D8D8] pb-3 items-center bg-white">
@@ -54,10 +89,36 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className=" flex flex-col mt-[159px] items-center">
-        <span style={{ fontFamily: "var(--font-rubik),sans-serif" } } className="w-[150px] text-center h-11 text-[36px] font-bold text-[#174286]">
+      <div
+        className=" flex flex-col mt-[120px] items-center"
+        style={{ fontFamily: "var(--font-rubik),sans-serif" }}
+      >
+        <span className="w-[150px] text-center h-11 text-[36px] font-bold text-[#174286]">
           To Do
         </span>
+        <form onSubmit={handleSubmit} className="space-y-5 mt-[65px]">
+          <div className="flex flex-col border rounded-3xl border-[#B5B5BE] w-[850px] h-[504px] p-12 ">
+            <div>
+              <label className="text-[20px font-medium text-[#7D7D7D] block">
+                Add new task
+              </label>
+              <div className="flex flex-row justify-between items-center mt-2.5">
+                <input
+                  type="text"
+                  value={todo}
+                  onChange={(e) => setTodo(e.target.value)}
+                  className=" bg-[#FAFAFA] rounded-[3px] w-[560px] text-[24px] border-b-2 border-b-[#174286] pl-4 text-[#323232] font-medium h-11"
+                />
+                <button
+                  type="submit"
+                  className="rounded-lg w-40 h-11 text-white bg-[#0062FF] text-[20px] font-medium items-center"
+                >
+                  Add Todo
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </>
   );
