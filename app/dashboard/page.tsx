@@ -7,8 +7,17 @@ interface User {
   email: string;
   role: string;
 }
+interface Todo {
+  id: string;
+  item: string;
+  userId: string;
+  isDone: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function DashboardPage() {
+  const [list, setList] = useState<Todo[]>([]);
   const [todo, setTodo] = useState("");
   const [massage, setMassage] = useState("");
   const [user, setUser] = useState<User | null>(null);
@@ -49,7 +58,9 @@ export default function DashboardPage() {
       );
       const data = await response.json();
       if (response.ok) {
+        setList((prevList) => [...prevList, data.content]);
         setMassage(data.message);
+        setTodo("");
         console.log(massage);
       } else {
         setMassage(data.message);
@@ -96,8 +107,9 @@ export default function DashboardPage() {
         <span className="w-[150px] text-center h-11 text-[36px] font-bold text-[#174286]">
           To Do
         </span>
-        <form onSubmit={handleSubmit} className="space-y-5 mt-[65px]">
-          <div className="flex flex-col border rounded-3xl border-[#B5B5BE] w-[850px] h-[504px] p-12 ">
+
+        <div className="flex flex-col mt-[65px] border rounded-3xl border-[#B5B5BE] w-[850px] h-[504px] p-12 ">
+          <form onSubmit={handleSubmit}>
             <div>
               <label className="text-[20px font-medium text-[#7D7D7D] block">
                 Add new task
@@ -117,8 +129,12 @@ export default function DashboardPage() {
                 </button>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+
+          {list.map((list) => (
+            <li key={list.id}>{list.item}</li>
+          ))}
+        </div>
       </div>
     </>
   );
