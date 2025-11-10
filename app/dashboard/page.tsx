@@ -17,6 +17,7 @@ interface Todo {
 }
 
 export default function DashboardPage() {
+  const [checked, setChecked] = useState(false);
   const [list, setList] = useState<Todo[]>([]);
   const [todo, setTodo] = useState("");
   const [massage, setMassage] = useState("");
@@ -69,6 +70,39 @@ export default function DashboardPage() {
     } catch (error) {
       console.error(error);
       setMassage("Something went wrong");
+    }
+  };
+  const handleToggle = async (id: string, isDone: boolean) => {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("You need to login first!");
+
+    try {
+      const response = await fetch(
+        `https://fe-test-api.nwappservice.com/todos/${id}/mark`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            action: isDone ? "UNDONE" : "DONE",
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        setList((prevList) =>
+          prevList.map((list) =>
+            list.id === id ? { ...list, isDone: !isDone } : list
+          )
+        );
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error("Failed to update todo:", error);
     }
   };
   return (
@@ -132,27 +166,42 @@ export default function DashboardPage() {
           </form>
 
           {list.map((list) => (
-            <>
-              <div className="mt-6 pb-6 flex flex-row items-center  border-b-[#979797] border-b ">
-                <label className="w-[60px] cursor-pointer ">
-                  {" "}
-                  <input
-                    type="checkbox"
-                    className="hidden peer"
+            <div
+              className="mt-6 pb-6 flex flex-row items-center  border-b-[#979797] border-b "
+              key={list.id}
+            >
+              <label className="w-[60px] cursor-pointer ">
+                {" "}
+                <input
+                  type="checkbox"
+                  checked={list.isDone}
+                  onChange={() => handleToggle(list.id,list.isDone)}
+                  className="hidden"
+                />
+                <div
+                  className={` flex justify-center w-7 h-7  rounded-xs p-[5px] items-center ${
+                    list.isDone ? "bg-[#afeb9f59]" : "bg-[#E6E6E6]"
+                    }`}
+                >
+                  <img
+                    src="/assets/Shape.svg"
+                    alt="check"
+                    className={`w-4 h-4 transition-opacity duration-150 ${
+                      list.isDone ? "opacity-100 " : "opacity-0"
+                    }`}
                   />
-                  <div className=" flex justify-center w-7 h-7 bg-[#E6E6E6] rounded-xs p-[5px] items-center peer-checked:bg-[#afeb9f59] ">
-                    <img
-                      src="/assets/Shape.svg"
-                      alt="check"
-                      className="hidden w-4 h-4 peer-checked:inline"
-                    />
-                  </div>
-                </label>
-                <ul className="pl-1 text-[24px] font-normal" key={list.id}>
-                  {list.item}
-                </ul>
+                </div>
+              </label>
+              <div className="flex flex-row justify-between w-full items-center">
+                <ul className="pl-1 text-[24px] font-normal">{list.item}</ul>
+                <img
+                  src={
+                    list.isDone ? `/assets/Vector.svg` : `/assets/gg_check-o.svg`
+                  }
+                  className="w-7"
+                ></img>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </div>
