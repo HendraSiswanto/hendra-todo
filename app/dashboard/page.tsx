@@ -132,7 +132,27 @@ export default function DashboardPage() {
           </form>
 
           {list.map((list) => (
-            <li key={list.id}>{list.item}</li>
+            <>
+              <div className="mt-6 pb-6 flex flex-row items-center  border-b-[#979797] border-b ">
+                <label className="w-[60px] cursor-pointer ">
+                  {" "}
+                  <input
+                    type="checkbox"
+                    className="hidden peer"
+                  />
+                  <div className=" flex justify-center w-7 h-7 bg-[#E6E6E6] rounded-xs p-[5px] items-center peer-checked:bg-[#afeb9f59] ">
+                    <img
+                      src="/assets/Shape.svg"
+                      alt="check"
+                      className="hidden w-4 h-4 peer-checked:inline"
+                    />
+                  </div>
+                </label>
+                <ul className="pl-1 text-[24px] font-normal" key={list.id}>
+                  {list.item}
+                </ul>
+              </div>
+            </>
           ))}
         </div>
       </div>
