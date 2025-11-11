@@ -142,7 +142,7 @@ export default function DashboardPage() {
           To Do
         </span>
 
-        <div className="flex flex-col mt-[65px] border rounded-3xl border-[#B5B5BE] w-[850px] h-[504px] p-12 ">
+        <div className="flex flex-col mt-[65px] border rounded-3xl border-[#B5B5BE] w-[850px] h-[504px]  p-12 ">
           <form onSubmit={handleSubmit}>
             <div>
               <label className="text-[20px font-medium text-[#7D7D7D] block">
@@ -175,13 +175,13 @@ export default function DashboardPage() {
                 <input
                   type="checkbox"
                   checked={list.isDone}
-                  onChange={() => handleToggle(list.id,list.isDone)}
+                  onChange={() => handleToggle(list.id, list.isDone)}
                   className="hidden"
                 />
                 <div
                   className={` flex justify-center w-7 h-7  rounded-xs p-[5px] items-center ${
                     list.isDone ? "bg-[#afeb9f59]" : "bg-[#E6E6E6]"
-                    }`}
+                  }`}
                 >
                   <img
                     src="/assets/Shape.svg"
@@ -196,13 +196,18 @@ export default function DashboardPage() {
                 <ul className="pl-1 text-[24px] font-normal">{list.item}</ul>
                 <img
                   src={
-                    list.isDone ? `/assets/Vector.svg` : `/assets/gg_check-o.svg`
+                    list.isDone
+                      ? `/assets/Vector.svg`
+                      : `/assets/gg_check-o.svg`
                   }
-                  className="w-7"
+                  className=" w-7"
                 ></img>
               </div>
             </div>
           ))}
+          <div className="w-full" >
+            <button>delete</button>
+          </div>
         </div>
       </div>
     </>
