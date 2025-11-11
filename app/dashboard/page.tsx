@@ -142,7 +142,7 @@ export default function DashboardPage() {
           To Do
         </span>
 
-        <div className="flex flex-col mt-[65px] border rounded-3xl border-[#B5B5BE] w-[850px] h-[504px]  p-12 ">
+        <div className="flex flex-col mt-[65px] z-10 border rounded-3xl border-[#B5B5BE] w-[850px] h-auto min-h-[504px] p-12 ">
           <form onSubmit={handleSubmit}>
             <div>
               <label className="text-[20px font-medium text-[#7D7D7D] block">
@@ -157,7 +157,7 @@ export default function DashboardPage() {
                 />
                 <button
                   type="submit"
-                  className="rounded-lg w-40 h-11 text-white bg-[#0062FF] text-[20px] font-medium items-center"
+                  className="cursor-pointer rounded-lg w-40 h-11 text-white bg-[#0062FF] text-[20px] font-medium items-center"
                 >
                   Add Todo
                 </button>
@@ -167,7 +167,7 @@ export default function DashboardPage() {
 
           {list.map((list) => (
             <div
-              className="mt-6 pb-6 flex flex-row items-center  border-b-[#979797] border-b "
+              className=" mt-6 pb-6 flex flex-row items-center  border-b-[#979797] border-b mb-5 "
               key={list.id}
             >
               <label className="w-[60px] cursor-pointer ">
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                   />
                 </div>
               </label>
-              <div className="flex flex-row justify-between w-full items-center">
+              <div className="flex flex-row justify-between w-full items-center ">
                 <ul className="pl-1 text-[24px] font-normal">{list.item}</ul>
                 <img
                   src={
@@ -200,14 +200,18 @@ export default function DashboardPage() {
                       ? `/assets/Vector.svg`
                       : `/assets/gg_check-o.svg`
                   }
-                  className=" w-7"
+                  className=" w-7 "
                 ></img>
               </div>
             </div>
           ))}
-          <div className="w-full" >
-            <button>delete</button>
-          </div>
+          {list.length > 0 ? (
+            <div className={list.length > 2 ? "":`flex absolute h-102 items-end pointer-events-none`}>
+              <button className={`bg-[#FC5A5A] pointer-events-auto text-white font-medium w-[180px] h-10 py-2 px-4 rounded-sm text-[16px] cursor-pointer ${list.length > 2?"mt-8":"" } `}>Deleted Selected</button>
+            </div>
+          ) : (
+            "There is no Todo List"
+          )}
         </div>
       </div>
     </>
