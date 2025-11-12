@@ -17,7 +17,6 @@ interface Todo {
 }
 
 export default function DashboardPage() {
-  const [checked, setChecked] = useState(false);
   const [list, setList] = useState<Todo[]>([]);
   const [todo, setTodo] = useState("");
   const [massage, setMassage] = useState("");
@@ -34,6 +33,21 @@ export default function DashboardPage() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const savedTodos = localStorage.getItem("todos");
+    if (savedTodos) {
+      try {
+        setList(JSON.parse(savedTodos));
+      } catch (error) {
+        console.error("Failed to parse saved todos:", error);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(list));
+  }, [list]);
 
   if (!user) return <p>Loading...</p>;
 
@@ -72,6 +86,34 @@ export default function DashboardPage() {
       setMassage("Something went wrong");
     }
   };
+  const handleDeleteSelected = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("You need to login first!");
+
+    const doneTodos = list.filter((item) => item.isDone);
+    if (doneTodos.length === 0) {
+      alert("No completed todos to delete!");
+      return;
+    }
+
+    try {
+      await Promise.all(
+        doneTodos.map(async (todo) => {
+          await fetch(`https://fe-test-api.nwappservice.com/todos/${todo.id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        })
+      );
+
+      setList(list.filter((item) => !item.isDone));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   const handleToggle = async (id: string, isDone: boolean) => {
     const token = localStorage.getItem("token");
     if (!token) return alert("You need to login first!");
@@ -102,7 +144,7 @@ export default function DashboardPage() {
         console.error(data.message);
       }
     } catch (error) {
-      console.error("Failed to update todo:", error);
+      console.error("error:", error);
     }
   };
   return (
@@ -153,7 +195,7 @@ export default function DashboardPage() {
                   type="text"
                   value={todo}
                   onChange={(e) => setTodo(e.target.value)}
-                  className=" bg-[#FAFAFA] rounded-[3px] w-[560px] text-[24px] border-b-2 border-b-[#174286] pl-4 text-[#323232] font-medium h-11"
+                  className="focus:outline-none focus:border-b-[3px] focus:border-b-[#174286] transition-all duration-200 bg-[#FAFAFA] rounded-[3px] w-[560px] text-[24px] border-b-2 border-b-[#174286] pl-4 text-[#323232] font-medium h-11"
                 />
                 <button
                   type="submit"
@@ -206,8 +248,21 @@ export default function DashboardPage() {
             </div>
           ))}
           {list.length > 0 ? (
-            <div className={list.length > 2 ? "":`flex absolute h-102 items-end pointer-events-none`}>
-              <button className={`bg-[#FC5A5A] pointer-events-auto text-white font-medium w-[180px] h-10 py-2 px-4 rounded-sm text-[16px] cursor-pointer ${list.length > 2?"mt-8":"" } `}>Deleted Selected</button>
+            <div
+              className={
+                list.length > 2
+                  ? ""
+                  : `flex absolute h-102 items-end pointer-events-none`
+              }
+            >
+              <button
+                className={`bg-[#FC5A5A] pointer-events-auto text-white font-medium w-[180px] h-10 py-2 px-4 rounded-sm text-[16px] cursor-pointer ${
+                  list.length > 2 ? "mt-8" : ""
+                } `}
+                onClick={handleDeleteSelected}
+              >
+                Deleted Selected
+              </button>
             </div>
           ) : (
             "There is no Todo List"
