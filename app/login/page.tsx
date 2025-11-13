@@ -109,12 +109,12 @@ export default function LoginPage() {
                 onCheckedChange={(checked) => setRememberMe(!!checked)}
                 className="data-[state=checked]:bg-[#50B5FF]  data-[state=checked]:text-white cursor-pointer"
               />
-              <span className="text-[14px] text-[#696974] ml-1">
+              <span  className="text-[14px] text-[#696974] ml-1">
                 Remember me
               </span>
             </label>
 
-            <a className="size-3.5 w-fit h-fit text-[#50B5FF] font-medium cursor-pointer hover:underline">
+            <a href="/forgot-password" className="size-3.5 w-fit h-fit text-[#50B5FF] font-medium cursor-pointer hover:underline">
               Forgot Password
             </a>
           </div>
