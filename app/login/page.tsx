@@ -2,13 +2,22 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function LoginPage() {
-  const router = useRouter()
+  const [rememberMe, setRememberMe] = useState(false);
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMassage, setErrMessage] = useState("");
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,16 +37,19 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-     
-
       if (!response.ok) {
         alert(data.message || "Login Failed");
         return;
-
       }
-       localStorage.setItem("token", data.content.token);
+
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
+      localStorage.setItem("token", data.content.token);
       localStorage.setItem("user", JSON.stringify(data.content.user));
-      router.push("/dashboard")
+      router.push("/dashboard");
     } catch (error) {
       setErrMessage("Something went wrong. Please try again.");
       console.error("Error:", error);
@@ -92,7 +104,9 @@ export default function LoginPage() {
           <div className="flex flex-row justify-between align-middle">
             <label className="flex items-center space-x-2 cursor-pointer">
               <Checkbox
-                id="remember"
+                id="rememberMe"
+                checked={rememberMe}
+                onCheckedChange={(checked) => setRememberMe(!!checked)}
                 className="data-[state=checked]:bg-[#50B5FF]  data-[state=checked]:text-white cursor-pointer"
               />
               <span className="text-[14px] text-[#696974] ml-1">
@@ -113,7 +127,6 @@ export default function LoginPage() {
           </button>
         </form>
         {errMassage && <p style={{ color: "red" }}>{errMassage}</p>}
-
       </div>
       <p className="text-center font-medium text-[14px] text-[#0062FF] mt-[15px]">
         Don’t have an account?{" "}
