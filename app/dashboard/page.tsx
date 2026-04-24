@@ -92,7 +92,7 @@ export default function DashboardPage() {
 
     const doneTodos = list.filter((item) => item.isDone);
     if (doneTodos.length === 0) {
-      alert("No completed todos to delete!");
+      alert("No completed todos to delete");
       return;
     }
 
