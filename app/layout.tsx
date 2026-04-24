@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto,Inter,Rubik } from "next/font/google";
 
 import "./globals.css";
+import Providers from "./provider";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -24,13 +25,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable}  ${inter.variable} ${rubik.variable} min-h-screen antialiased`}>
-        <div className="min-h-screen bg-white">{children}</div>
+      <body
+        className={`${roboto.variable} ${inter.variable} ${rubik.variable} min-h-screen antialiased`}
+      >
+        <Providers>
+          <div className="min-h-screen bg-white">{children}</div>
+        </Providers>
       </body>
     </html>
   );

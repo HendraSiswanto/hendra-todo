@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -17,10 +18,16 @@ interface Todo {
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [list, setList] = useState<Todo[]>([]);
   const [todo, setTodo] = useState("");
   const [massage, setMassage] = useState("");
   const [user, setUser] = useState<User | null>(null);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/login");
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -69,7 +76,7 @@ export default function DashboardPage() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ item: todo }),
-        }
+        },
       );
       const data = await response.json();
       if (response.ok) {
@@ -106,7 +113,7 @@ export default function DashboardPage() {
               Authorization: `Bearer ${token}`,
             },
           });
-        })
+        }),
       );
 
       setList(list.filter((item) => !item.isDone));
@@ -130,15 +137,15 @@ export default function DashboardPage() {
           body: JSON.stringify({
             action: isDone ? "UNDONE" : "DONE",
           }),
-        }
+        },
       );
 
       const data = await response.json();
       if (response.ok) {
         setList((prevList) =>
           prevList.map((list) =>
-            list.id === id ? { ...list, isDone: !isDone } : list
-          )
+            list.id === id ? { ...list, isDone: !isDone } : list,
+          ),
         );
       } else {
         console.error(data.message);
@@ -269,6 +276,12 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 text-white px-4 py-2 rounded-md text-sm hover:bg-red-600 fixed bottom-4 right-4"
+      >
+        Logout
+      </button>
     </>
   );
 }

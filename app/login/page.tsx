@@ -32,7 +32,7 @@ export default function LoginPage() {
             email,
             password,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -49,7 +49,11 @@ export default function LoginPage() {
       }
       localStorage.setItem("token", data.content.token);
       localStorage.setItem("user", JSON.stringify(data.content.user));
-      router.push("/dashboard");
+      if (data.content.user.email === "admin@nodewave.id") {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (error) {
       setErrMessage("Something went wrong. Please try again.");
       console.error("Error:", error);
@@ -109,12 +113,15 @@ export default function LoginPage() {
                 onCheckedChange={(checked) => setRememberMe(!!checked)}
                 className="data-[state=checked]:bg-[#50B5FF]  data-[state=checked]:text-white cursor-pointer"
               />
-              <span  className="text-[14px] text-[#696974] ml-1">
+              <span className="text-[14px] text-[#696974] ml-1">
                 Remember me
               </span>
             </label>
 
-            <a href="/forgot-password" className="size-3.5 w-fit h-fit text-[#50B5FF] font-medium cursor-pointer hover:underline">
+            <a
+              href="/forgot-password"
+              className="size-3.5 w-fit h-fit text-[#50B5FF] font-medium cursor-pointer hover:underline"
+            >
               Forgot Password
             </a>
           </div>
